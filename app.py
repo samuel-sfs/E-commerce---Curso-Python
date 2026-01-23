@@ -16,7 +16,7 @@ class Product (db.Model):
 def add_product():
     data = request.json
     if 'name' in data and 'price' in data:
-        product = Product(name=data["name"], price=["price"], description=data.get("description", ""))
+        product = Product(name=data["name"], price=data["price"], description=data.get("description", ""))
         db.session.add(product)
         db.session.commit()
         return jsonify({"message":"Product added successfully"}), 200
@@ -44,6 +44,35 @@ def get_product_details(product_id):
         })
     return jsonify({"message": "Product not found"}), 404
 
+@app.route('/api/products/update/<int:product_id>', methods=["PUT"])
+def update_product(product_id):
+    product = Product.query.get(product_id)
+    if not product:
+        return jsonify({"message": "Product not found"}), 404
+    
+    data = request.json
+    if 'name' in data:
+        product.name= data['name']
+
+    if 'price' in data:
+        product.price = data['price']
+
+    if 'description' in data:
+        product.description = data['description']
+    
+    db.session.commit()
+    return jsonify({'message': 'Product updated successfully'})
+
+@app.route('/api/products', methods = ['GET'])
+def get_products():
+    products = Product.query.all()
+    for product in products:
+        print(products)
+    return jsonify({'message': 'teste'})
+
+
+
+    
 
 
 

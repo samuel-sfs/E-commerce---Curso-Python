@@ -1,0 +1,8 @@
+POST http://127.0.0.1:5000/api/products/add 
+Content-Type: application/json
+
+{
+    "name": "TV",
+    "price": 5.0,
+    "description": "Descrição de teste"
+}

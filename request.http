@@ -1,0 +1,12 @@
+POST http://127.0.0.1:5000/api/products/add
+Content-Type: application/json
+
+{
+     "name": "TV 4K 2",
+    "price": 10,
+    "description": "excluir" 
+  
+}
+
+DELETE http://127.0.0.1:5000/api/products/delete/3
+Content-Type: application/json

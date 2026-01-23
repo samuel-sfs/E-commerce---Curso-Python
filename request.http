@@ -1,8 +1,13 @@
+
+
+GET http://127.0.0.1:5000/api/products
+Content-Type: application/json
+
 POST http://127.0.0.1:5000/api/products/add
 Content-Type: application/json
 
 {
-     "name": "TV 4K 2",
+    "name": "TV 4K 2",
     "price": 10,
     "description": "excluir" 
   
@@ -10,3 +15,17 @@ Content-Type: application/json
 
 DELETE http://127.0.0.1:5000/api/products/delete/3
 Content-Type: application/json
+
+
+PUT http://127.0.0.1:5000/api/products/update/3
+Content-Type: application/json
+
+{
+     "name": "TV HD",
+    "price": 1000,
+    "description": "" 
+  
+} 
+
+
+

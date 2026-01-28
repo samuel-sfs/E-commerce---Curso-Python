@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from flask_login import UserMixin, 
+from flask_login import UserMixin 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecomerce.db'
@@ -96,4 +96,5 @@ def hello_world():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 

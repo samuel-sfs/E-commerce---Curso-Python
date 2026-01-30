@@ -1,11 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from flask_login import UserMixin 
+from flask_login import UserMixin, login_user, LoginManager
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecomerce.db'
+
+login_manager = LoginManager()
 db = SQLAlchemy(app)
+login_manager.init_app(app)
+login_manager.login_view= "login"
 CORS(app)
 
 class User(db.Model, UserMixin):
@@ -20,6 +24,21 @@ class Product (db.Model):
     name = db.Column(db.String(120), nullable=False)
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text, nullable=True)
+
+
+@app.route('/api/login', methods=["POST"])
+def login():
+    data = request.json
+    
+    user = User.query.filter_by(username=data.get("username")).first()
+    if user and data.get("password") == user.password:
+        login_user(user)
+        return jsonify({"message": "Logged in successfully"})
+    return jsonify({"message": "Unauthirized. Invalid credentials"})
+
+
+
+    return jsonify({"message": "Logged in sucesseffuly"})
 
 
 @app.route('/api/products/add', methods=["POST"])
@@ -78,17 +97,14 @@ def get_products():
     products = Product.query.all()
     product_list =[];
     for product in products:
-        product_data ={
+        product_data = {
             "id": product.id,
             "name": product.name,
             "price": product.price,
-            "description": product.descritption
+            "description": product.description
         }
         product_list.append(product_data)
-
-    return jsonify(product_list)   
-
-
+    return jsonify(product_list)  
 
 @app.route('/')
 def hello_world():
@@ -96,5 +112,4 @@ def hello_world():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
 
